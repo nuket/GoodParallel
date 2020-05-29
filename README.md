@@ -4,7 +4,11 @@ A super easy way to run native command lines in parallel,
 without needing to wrap them up in Python first.
 
 All you have to do is provide the list of command strings you want
-executed, and it will keep as many cores busy as it can.
+executed, and it will keep as many cores busy as it can. 
+
+![Parallel ffmpeg example](tests/Transcoding-Multicore.gif)
+
+The more work you throw at it, the better.
 
 ## Examples
 
