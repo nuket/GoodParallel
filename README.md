@@ -83,10 +83,11 @@ If you notice that some of the output files from the various commands are missin
 - Check to see what command was executed to create the output file and try running
   it manually.
 
-- Make sure that if you dependencies in the commands to be run, that you split the 
-  commands in multiple lists. i.e. if command A generates output B, and command C
+- Make sure that if there are dependencies in the commands to be run, that you split the 
+  commands into multiple lists. i.e. if command A generates output B, and command C
   uses B as input, then make sure to run command A in one list `[A]`, and command C 
-  in another list `[C]`.
+  in another list `[C]`. And make sure to run all of the first list before running the
+  second.
 
 ## Compatibility
 
