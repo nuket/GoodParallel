@@ -1,7 +1,7 @@
 # GoodParallel: A Simple Native-Executable Process Pool
 
 A super easy way to run native command lines in parallel,
-without needing to wrap them up in Python first.
+without needing to wrap them in Python first.
 
 All you have to do is provide the list of command strings you want
 executed, and it will keep as many cores busy as it can. 
@@ -10,7 +10,7 @@ executed, and it will keep as many cores busy as it can.
 
 The more work you throw at it, the better.
 
-## Examples
+## Example: Converting Image Files
 
 For example, using GraphicsMagick to convert a bunch of image files directly:
 
@@ -37,7 +37,7 @@ C++ library wrappers.
 
 ## What else is good about GoodParallel?
 
-multiprocessing.Pool adds overhead when running non-Python programs:
+[multiprocessing.Pool](https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing.pool) adds overhead when running non-Python programs:
 
 ```
 $ ps auxf
@@ -57,7 +57,7 @@ max        218  0.0  0.0  13956   816 tty1     T    01:16   0:00      |   |   \_
 max        222  0.0  0.0  17384  1892 tty1     R    01:17   0:00      \_ ps auxf
 ```
 
-GoodParallel.simple_process_pool() saves on memory at runtime:
+[GoodParallel.simple_process_pool()](https://github.com/nuket/GoodParallel/blob/64f2d4cb9a00d510ff740a6cba16312d5feb9f31/GoodParallel/GoodParallel.py#L45) saves on memory at runtime:
 
 ```
 $ ps auxf
@@ -73,10 +73,50 @@ max        227  0.0  0.0  13956   816 tty1     T    01:19   0:00      |   \_ sle
 max        228  0.0  0.0  17384  1892 tty1     R    01:19   0:00      \_ ps auxf
 ```
 
+## What might be bad about GoodParallel?
+
+It routes `stdout` and `stderr` straight to `/dev/null` to prevent processes from
+blocking or not exiting , at the moment.
+
+If you notice that some of the output files from the various commands are missing:
+
+- Check to see what command was executed to create the output file and try running
+  it manually.
+
+- Make sure that if you dependencies in the commands to be run, that you split the 
+  commands in multiple lists. i.e. if command A generates output B, and command C
+  uses B as input, then make sure to run command A in one list `[A]`, and command C 
+  in another list `[C]`.
+
 ## Compatibility
 
 It works with Python 2.6 and up.
 It works in color on Windows 10 Command Prompt, Windows Terminal, and Bash.
+
+## License
+
+```
+GoodParallel
+Copyright (c) 2020 Max Vilimpoc
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
 
 ## GitHub Repository
 
