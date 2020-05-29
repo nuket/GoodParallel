@@ -77,7 +77,7 @@ def simple_process_pool(commands_to_run, max_process_count=cpu_count(), time_bet
         # Check for space in the pool and start new processes.
         if len(commands) and len(processes) < max_process_count:
             command = commands.pop(0)
-            processes.append(subprocess.Popen(command.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE))
+            processes.append(subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)) # .split(' ')
             print(theme.STARTING + "Starting: (pid: {0}) '{1}', {2} commands left".format(processes[-1].pid, command, len(commands)) + theme.FINISHED)
         else:
             # Slow down the finish-check if all pool slots are in use.

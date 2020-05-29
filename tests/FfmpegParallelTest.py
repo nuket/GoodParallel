@@ -1,4 +1,4 @@
-# GoodParallel
+# GoodParallel: FfmpegParallelTest
 # Copyright (c) 2020 Max Vilimpoc
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,7 +28,7 @@ from support import enable_vt100
 # Unit test the process pool.
 
 def test():
-    import sys
+    import os
 
     # Assume that console has color unless it is the pre-Windows 10 Command Prompt.
     theme_colors = console_color
@@ -40,12 +40,15 @@ def test():
             # If no VT100 is available, then strip off the color codes.
             theme_colors = no_console_color
 
-        test_command = 'timeout /t {0}'
-    else:
-        test_command = 'sleep {0}'
+    test_command = 'ffmpeg -y -i {0} -an -filter_complex "[0:v] palettegen [palette]; [0:v][palette] paletteuse" {1}'
 
     # Run 16 instances of command.
-    commands = [test_command.format(i) for i in range(1, 5)] * 4
+    #     base, ext = os.path.splitext(i)
+
+    commands = [test_command.format(f, os.path.splitext(f)[0] + '.gif') for f in ['Cli-Ubuntu.mkv', 'Cli-Windows-Legacy.mkv', 'Cli-Windows-Terminal.mkv', 'Transcoding-Single-Core.mkv']]
+    print('\nRunning:')
+    # print('\n'.join(commands))
+    
     simple_process_pool(commands, theme=theme_colors)
 
 # Try it out.
