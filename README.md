@@ -76,7 +76,7 @@ max        228  0.0  0.0  17384  1892 tty1     R    01:19   0:00      \_ ps auxf
 ## What might be bad about GoodParallel?
 
 It routes `stdout` and `stderr` straight to `/dev/null` to prevent processes from
-blocking or not exiting , at the moment.
+blocking or not exiting, at the moment.
 
 If you notice that some of the output files from the various commands are missing:
 
