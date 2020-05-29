@@ -77,7 +77,7 @@ def simple_process_pool(commands_to_run, max_process_count=cpu_count(), time_bet
         # Check for space in the pool and start new processes.
         if len(commands) and len(processes) < max_process_count:
             command = commands.pop(0)
-            processes.append(subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)) # .split(' ')
+            processes.append(subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)) # Bury the output, otherwise some apps hang when stdout is piped but not read, refs: https://docs.python.org/3/library/subprocess.html (std*, bufsize), and https://www.javaworld.com/article/2071275/when-runtime-exec---won-t.html 
             print(theme.STARTING + "Starting: (pid: {0}) '{1}', {2} commands left".format(processes[-1].pid, command, len(commands)) + theme.FINISHED)
         else:
             # Slow down the finish-check if all pool slots are in use.

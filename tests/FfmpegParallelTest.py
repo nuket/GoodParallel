@@ -19,9 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import sys
-sys.path.append('../GoodParallel')
-
 from GoodParallel import console_color, no_console_color, simple_process_pool
 from support import enable_vt100
 
@@ -29,6 +26,7 @@ from support import enable_vt100
 
 def test():
     import os
+    import sys
 
     # Assume that console has color unless it is the pre-Windows 10 Command Prompt.
     theme_colors = console_color
@@ -42,14 +40,8 @@ def test():
 
     test_command = 'ffmpeg -y -i {0} -an -filter_complex "[0:v] palettegen [palette]; [0:v][palette] paletteuse" {1}'
 
-    # Run 16 instances of command.
-    #     base, ext = os.path.splitext(i)
-
-    commands = [test_command.format(f, os.path.splitext(f)[0] + '.gif') for f in ['Cli-Ubuntu.mkv', 'Cli-Windows-Legacy.mkv', 'Cli-Windows-Terminal.mkv', 'Transcoding-Single-Core.mkv']]
-    print('\nRunning:')
-    # print('\n'.join(commands))
-    
-    simple_process_pool(commands, theme=theme_colors)
+    commands = [test_command.format(f, os.path.splitext(f)[0] + '.gif') for f in ['Cli-Ubuntu.mkv', 'Cli-Windows-Legacy.mkv', 'Cli-Windows-Terminal.mkv', 'Transcoding-Single-Core.mkv', 'Transcoding-Multicore.mkv']]
+    results = simple_process_pool(commands, theme=theme_colors)
 
 # Try it out.
 if __name__ == '__main__':

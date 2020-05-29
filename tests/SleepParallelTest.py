@@ -19,9 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import sys
-sys.path.append('../GoodParallel')
-
 from GoodParallel import console_color, no_console_color, simple_process_pool
 from support import enable_vt100
 
